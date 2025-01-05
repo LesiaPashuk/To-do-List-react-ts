@@ -1,16 +1,15 @@
 import React from 'react';
-import './App.css';
-import { ListAndTasks } from './components/ListAndTasks/ListAndTasks';
-/*import Task from './components/Task/Task';
+import '../ListAndTasks/ListAndTasks.css';
+import Task from '../Task/Task';
 import { title } from 'process';
-import { TaskType, PropsType } from './components/Task/Task';
+import { TaskType, PropsType } from '../Task/Task';
 import { useState } from 'react';
 import { v1 } from 'uuid';
 import { TypeFormatFlags } from 'typescript';
 
-export type TypeForButton="typeAll"|"typeActive"|"typeDone";*/
-function App() {
-  /*const  firstTask=[
+export type TypeForButton="typeAll"|"typeActive"|"typeDone";
+export function ListAndTasks() {
+  const  firstTask=[
     {id:v1(), title:"Css", isDone:true},
     {id:v1(), title:"html", isDone:false},
     {id:v1(), title: "lol", isDone:true},
@@ -54,10 +53,8 @@ function inputValue(newTitle:string){
   setTask(newTasks);
   setConstTask(newTasks);
   console.log(typeof(buttonStatus))
-}*/
+}
   return (
-    <ListAndTasks></ListAndTasks>
-    /*
     <div className="App">
      <Task title="lol" 
      tasks={task} 
@@ -69,8 +66,6 @@ function inputValue(newTitle:string){
      changeIsDoneStatus={changeIsDoneStatus}
      buttonStatus={buttonStatus}
      ></Task>
-    </div>*/
+    </div>
   );
 }
-
-export default App;
