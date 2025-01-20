@@ -6,19 +6,13 @@ import { TaskType, PropsType } from '../Task/Task';
 import { useState } from 'react';
 import { v1 } from 'uuid';
 import { TypeFormatFlags } from 'typescript';
-
+import { ListAndTaskType } from '../../App';
 export type TypeForButton="typeAll"|"typeActive"|"typeDone";
-export function ListAndTasks() {
-  const  firstTask=[
-    {id:v1(), title:"Css", isDone:true},
-    {id:v1(), title:"html", isDone:false},
-    {id:v1(), title: "lol", isDone:true},
-    {id:v1(), title:"pop", isDone:false}
-  ]
+export function ListAndTasks(props:ListAndTaskType) {
 const[buttonStatus, setButtonStatus]=useState<TypeForButton>("typeAll")
-const[task, setTask]=useState(firstTask )
+const[task, setTask]=useState(props.listAndTask)
 const[isDone1, setIsDone1]=useState(false);
-const[constTask, setConstTask]=useState(firstTask )
+const[constTask, setConstTask]=useState(props.listAndTask )
 function removeTask(id:string){
   let arr= task.filter(task=>task.id!=id)
   setTask(arr);
@@ -52,11 +46,22 @@ function inputValue(newTitle:string){
   let newTasks=[newTask, ...constTask];
   setTask(newTasks);
   setConstTask(newTasks);
-  console.log(typeof(buttonStatus))
+}
+function takeNewTaskTitle(idTask:string, newTitle:string, todolistId:string){
+    let task = constTask.find(t=> t.id===idTask);
+  if(task){
+    task.title=newTitle;
+  }
+  setConstTask([...constTask]);
+  setTask([...constTask]);
+}
+function takeNewTitle(newTitle:string, todolistId:string){
+    props.updateListTitle(todolistId, newTitle);
 }
   return (
     <div className="App">
-     <Task title="lol" 
+     <Task title={props.title}  
+     id={props.id}
      tasks={task} 
      removeTask={removeTask} 
      completedTask={completedTask} 
@@ -65,6 +70,8 @@ function inputValue(newTitle:string){
      inputValue={inputValue}
      changeIsDoneStatus={changeIsDoneStatus}
      buttonStatus={buttonStatus}
+     takeNewTaskTitle={takeNewTaskTitle}
+     takeNewTitle={takeNewTitle}
      ></Task>
     </div>
   );

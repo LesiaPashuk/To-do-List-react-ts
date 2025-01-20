@@ -1,12 +1,14 @@
 import { error } from "console"
 import { ChangeEvent,KeyboardEvent, useState } from "react"
 import { TypeForButton } from '../ListAndTasks/ListAndTasks'
+import { EditableSpan } from "../EditableSpan/EditableSpan"
 export type TaskType={
     id:string,
     title: string,
     isDone: boolean
 }
 export type PropsType={
+    id:string,
     title: string,
     tasks: Array<TaskType>,
     removeTask:Function
@@ -16,6 +18,8 @@ export type PropsType={
     inputValue:Function
     changeIsDoneStatus:(idTask:string, isDone:boolean)=>void
     buttonStatus:TypeForButton
+    takeNewTaskTitle:(idTask:string, newTitle:string, todolistId:string)=>void
+    takeNewTitle:(newTitle:string, todolistId:string)=>void
 }
  
 function Task(props: PropsType){
@@ -38,9 +42,16 @@ function Task(props: PropsType){
         addNewInputValueFuo();
     }
     }
+   const onTakeNewTitleFuo=(newValue:string)=>{
+        props.takeNewTitle(newValue, props.id);
+   }
     return(
     <div>
-        <h2>{props.title}</h2>
+        
+        
+        <h2>
+            <EditableSpan title={props.title} onChange={onTakeNewTitleFuo}></EditableSpan>
+        </h2>
         <input type="text" value={newInputValue} 
         onChange={takeNewTitleFuo}
         onKeyPress={takeNewTitleOnEnterFuo}
@@ -56,10 +67,14 @@ function Task(props: PropsType){
                     props.changeIsDoneStatus(task.id, e.currentTarget.checked)
                     console.log("wait you dont love me like i love you"+ e.currentTarget.checked)
                 }
+                const onTakeNewTaskTitleFuo=(newValue:string)=>{
+                    props.takeNewTaskTitle(task.id, newValue, props.id)
+                }
                  return <li key={task.id}> 
                  <input type="checkbox" checked={task.isDone} onChange={changeIsDoneStatus}></input>
-                 <span>{task.title}</span>
+                 <EditableSpan title={task.title} onChange={ onTakeNewTaskTitleFuo}></EditableSpan>
                  <button onClick={onRemoveHandler}>x</button>
+                
             </li>}
             )}
         </ul>

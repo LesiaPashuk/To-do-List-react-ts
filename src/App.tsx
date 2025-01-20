@@ -1,76 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import { ListAndTasks } from './components/ListAndTasks/ListAndTasks';
-/*import Task from './components/Task/Task';
-import { title } from 'process';
-import { TaskType, PropsType } from './components/Task/Task';
-import { useState } from 'react';
-import { v1 } from 'uuid';
-import { TypeFormatFlags } from 'typescript';
 
-export type TypeForButton="typeAll"|"typeActive"|"typeDone";*/
-function App() {
-  /*const  firstTask=[
-    {id:v1(), title:"Css", isDone:true},
-    {id:v1(), title:"html", isDone:false},
-    {id:v1(), title: "lol", isDone:true},
-    {id:v1(), title:"pop", isDone:false}
-  ]
-const[buttonStatus, setButtonStatus]=useState<TypeForButton>("typeAll")
-const[task, setTask]=useState(firstTask )
-const[isDone1, setIsDone1]=useState(false);
-const[constTask, setConstTask]=useState(firstTask )
-function removeTask(id:string){
-  let arr= task.filter(task=>task.id!=id)
-  setTask(arr);
-  setConstTask(arr);
-}
-function completedTask(){
-  let arrComleted= constTask.filter(task=>task.isDone===true)
-  setTask(arrComleted);
-  setButtonStatus("typeDone")
-} 
-function activeTask(){
-  let arrActive=constTask.filter(task=>task.isDone==false);
-  setTask(arrActive);
-  setButtonStatus("typeActive")
-}
-function allTask(){
-  setTask(constTask);
-  setButtonStatus("typeAll")
-}
-function changeIsDoneStatus(idTask:string, isDone:boolean){
-  let task = constTask.find(t=> t.id===idTask);
-  if(task){
-    task.isDone=isDone;
+import { v1 } from 'uuid';
+import  { PropsType } from './components/Task/Task';
+import { ListAndTasks } from './components/ListAndTasks/ListAndTasks';
+import { title } from 'process';
+import { TaskType } from './components/Task/Task';
+export type ListAndTaskType={
+    id:string,
+    title:string,
+    listAndTask:Array<TaskType>,
+    updateListTitle:(newTitle:string, todolistId:string)=>void
   }
-  setConstTask([...constTask]);
-  setTask([...constTask]);
-}
-//мой ввод 
-function inputValue(newTitle:string){
-  let newTask = {id:v1(), title:newTitle, isDone:isDone1};
-  let newTasks=[newTask, ...constTask];
-  setTask(newTasks);
-  setConstTask(newTasks);
-  console.log(typeof(buttonStatus))
-}*/
-  return (
-    <ListAndTasks></ListAndTasks>
-    /*
-    <div className="App">
-     <Task title="lol" 
-     tasks={task} 
-     removeTask={removeTask} 
-     completedTask={completedTask} 
-     activeTask={activeTask}
-     allTask={allTask}
-     inputValue={inputValue}
-     changeIsDoneStatus={changeIsDoneStatus}
-     buttonStatus={buttonStatus}
-     ></Task>
-    </div>*/
-  );
+function App() {
+  
+  const[arrListAndTask, setArrListAndTask]=useState<Array<ListAndTaskType>>([])
+  const addNewList=()=>{
+    const answer1 = prompt('Введите название нового to-do-list')
+    
+    if(answer1){
+      const newElem : ListAndTaskType  = {
+      id:v1(), 
+      title:answer1,
+      listAndTask:[], 
+      updateListTitle(newTitle:string, todolistId:string){}
+      }
+    setArrListAndTask([...arrListAndTask, newElem]);
+      }
+    }
+  const deleteList=(id:string)=>{
+    const filterArr= arrListAndTask.filter(list=>list.id!=id)
+    setArrListAndTask(filterArr);
+  }
+  const updateListTitle = (id: string, newTitle: string) =>{
+    const newListWithUpdateTitle=arrListAndTask.map((list)=>{
+      if(list.id==id){
+        return {...list, title:newTitle}
+      }
+      return list;
+    })
+    setArrListAndTask(newListWithUpdateTitle)
+    
+  }
+  return (<div>
+  <button type="button" onClick={addNewList}>+</button>
+   {arrListAndTask.map((el)=>{
+    return <div key={el.id}>
+    <button onClick={()=>{deleteList(el.id)}}>x</button>
+    <ListAndTasks
+    id={el.id}
+    title={el.title}
+    listAndTask={el.listAndTask}
+    updateListTitle={el.updateListTitle} 
+    ></ListAndTasks>
+    </div>
+   })}
+  </div>);
 }
 
 export default App;
