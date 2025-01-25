@@ -6,7 +6,7 @@ import { TaskType, PropsType } from '../Task/Task';
 import { useState } from 'react';
 import { v1 } from 'uuid';
 import { TypeFormatFlags } from 'typescript';
-import { ListAndTaskType } from '../../App';
+import { ListAndTaskType } from '../CreateToDoLists/CreateToDoLists';
 export type TypeForButton="typeAll"|"typeActive"|"typeDone";
 export function ListAndTasks(props:ListAndTaskType) {
 const[buttonStatus, setButtonStatus]=useState<TypeForButton>("typeAll")
@@ -57,10 +57,15 @@ function takeNewTaskTitle(idTask:string, newTitle:string, todolistId:string){
 }
 function takeNewTitle(newTitle:string, todolistId:string){
     props.updateListTitle(todolistId, newTitle);
-}
+}//className="d-flex align-items-start"
+function onDeleteList(idList:string){
+  props.deleteList(idList);
+ }
   return (
-    <div className="App">
-     <Task title={props.title}  
+    <div className="d-flex align-items-start">
+     <Task 
+    onDeleteList={onDeleteList}
+     title={props.title}  
      id={props.id}
      tasks={task} 
      removeTask={removeTask} 

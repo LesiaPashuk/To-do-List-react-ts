@@ -1,4 +1,5 @@
 import { error } from "console"
+import '../Task/styleTask.css';
 import { ChangeEvent,KeyboardEvent, useState } from "react"
 import { TypeForButton } from '../ListAndTasks/ListAndTasks'
 import { EditableSpan } from "../EditableSpan/EditableSpan"
@@ -20,6 +21,7 @@ export type PropsType={
     buttonStatus:TypeForButton
     takeNewTaskTitle:(idTask:string, newTitle:string, todolistId:string)=>void
     takeNewTitle:(newTitle:string, todolistId:string)=>void
+    onDeleteList:(idList:string)=>void
 }
  
 function Task(props: PropsType){
@@ -45,20 +47,28 @@ function Task(props: PropsType){
    const onTakeNewTitleFuo=(newValue:string)=>{
         props.takeNewTitle(newValue, props.id);
    }
+   const onDeleteList = () => {
+    props.onDeleteList(props.id);
+};
     return(
     <div>
-        
-        
-        <h2>
-            <EditableSpan title={props.title} onChange={onTakeNewTitleFuo}></EditableSpan>
-        </h2>
+        <div className="d-flex align-items-start">
+            <h2 >
+                <EditableSpan title={props.title} onChange={onTakeNewTitleFuo}></EditableSpan>
+            </h2>
+            <div className="align-self-center">
+            <button className="btn-close " aria-label="Close" onClick={onDeleteList}></button>
+            </div>
+        </div>
+        <div className="d-flex justify-content-center">
         <input type="text" value={newInputValue} 
         onChange={takeNewTitleFuo}
         onKeyPress={takeNewTitleOnEnterFuo}
-        className={error?"error":""} ></input>
+        className={error?"error":"form-control border-success"} ></input>
         {error&&<div className="error-massage">заполнение обязательно</div>}
-        <button onClick={addNewInputValueFuo}>save</button>
-        <ul>
+        <button onClick={addNewInputValueFuo} className="btn btn-primary">save</button>
+        </div>
+        <ul className="list-group">
             {props.tasks.map((task:TaskType)=>{
                 const onRemoveHandler=()=>{
                     props.removeTask(task.id)
@@ -70,18 +80,24 @@ function Task(props: PropsType){
                 const onTakeNewTaskTitleFuo=(newValue:string)=>{
                     props.takeNewTaskTitle(task.id, newValue, props.id)
                 }
-                 return <li key={task.id}> 
+                 return <li className="list-group-item"key={task.id}> 
+                <div className="align-self-center"> <EditableSpan title={task.title} onChange={ onTakeNewTaskTitleFuo}></EditableSpan></div>
+                < div className="d-flex justify-content-start">
                  <input type="checkbox" checked={task.isDone} onChange={changeIsDoneStatus}></input>
-                 <EditableSpan title={task.title} onChange={ onTakeNewTaskTitleFuo}></EditableSpan>
-                 <button onClick={onRemoveHandler}>x</button>
+                 </div>
+                 
+                 <div className="d-flex justify-content-end"><button className="btn-close" aria-label="Close"onClick={onRemoveHandler}></button></div>
                 
             </li>}
             )}
         </ul>
-        
-        <button className={props.buttonStatus=="typeAll"?"currentButton":""} onClick={()=>props.allTask()}>All</button>
-        <button className={props.buttonStatus=="typeActive"?"currentButton":""} onClick={()=>props.activeTask()}>Active</button>
-        <button className={props.buttonStatus=="typeDone"?"currentButton":""} onClick={()=>props.completedTask()}>Completed</button>
+        <div className="btn-group" role="group" aria-label="Basic example"> 
+        <button className={props.buttonStatus=="typeAll"?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>props.allTask()}>All</button>
+        <button className={props.buttonStatus=="typeActive"?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>props.activeTask()}>Active</button>
+        <button className={props.buttonStatus=="typeDone"?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>props.completedTask()}>Completed</button>
+        </div>
+       
     </div>)
 }
 export default Task;
+// class="btn btn-primary"

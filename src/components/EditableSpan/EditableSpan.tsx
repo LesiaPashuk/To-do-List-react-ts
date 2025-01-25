@@ -13,7 +13,7 @@ export function EditableSpan(props:EditableSpanPropdType){
           props.onChange(newInputValue)
         }
     return editableState
-    ?<input onBlur={activeEditableSate} value={newInputValue}  onChange={takeNewTitleFuo} autoFocus={true}></input>
+    ?<input className="form-control border-success"onBlur={activeEditableSate} value={newInputValue}  onChange={takeNewTitleFuo} autoFocus={true}></input>
     :<span onDoubleClick={activeEditableSate}>{newInputValue}</span>
     
 }
