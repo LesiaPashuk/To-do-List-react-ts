@@ -1,50 +1,43 @@
 import React, { useReducer } from 'react';
 import '../ListAndTasks/ListAndTasks.css';
 import Task from '../Task/Task';
-import { TaskType, PropsType } from '../Task/Task';
-import { useState } from 'react';
-import { v1 } from 'uuid';
 import { ListAndTaskType } from '../CreateToDoLists/CreateToDoLists';
 import { addTaskAC, allTaskAC, changeIsDoneStatusAC, onlyActiveAC, onlyCompletedAC, removeTaskAC, takeNewTaskTitleAC } from '../../state/todolist-reducer';
 import { todoListReducer } from '../../state/todolist-reducer';
-
 export type TypeForButton="typeAll"|"typeActive"|"typeDone";
 export function ListAndTasksWithReducer(props:ListAndTaskType) {
-const[buttonStatus, setButtonStatus]=useState<TypeForButton>("typeAll")
 const[task, dispatchTask ]=useReducer(todoListReducer,{
   tasks:[] , 
   history:[], 
+  buttonStatusState:"typeAll"
 })
-const[isDone1, setIsDone1]=useState(false);
-const[constTask, setConstTask]=useState(props.listAndTask )
-function removeTask(id:string){
-  const action = removeTaskAC(id)
+function removeTask(id:string,buttonStatus:TypeForButton){
+  const action = removeTaskAC(id, buttonStatus)
   dispatchTask(action);
 }
 function completedTask(){
-  const action = onlyCompletedAC()
+  const action = onlyCompletedAC("typeDone")
   dispatchTask(action)
-  
 } 
 function activeTask(){
-  const action = onlyActiveAC();
+  const action = onlyActiveAC("typeActive");
   dispatchTask(action)
 }
 function allTask(){
- const action = allTaskAC();
+ const action = allTaskAC("typeAll");
  dispatchTask(action)
 }
-function changeIsDoneStatus(idTask:string){
-  const action = changeIsDoneStatusAC(idTask);
+function changeIsDoneStatus(idTask:string,buttonStatus:TypeForButton){
+  const action = changeIsDoneStatusAC(idTask, buttonStatus);
   dispatchTask(action);
 }
-//мой ввод 
-function inputValue(newTitle:string){
-  const action = addTaskAC(newTitle);
+//ввод новой таски
+function inputValue(newTitle:string,buttonStatus:TypeForButton){
+  const action = addTaskAC(newTitle,buttonStatus);
   dispatchTask(action);
 }
-function takeNewTaskTitle(idTask:string, newTitle:string){
-    const action = takeNewTaskTitleAC(idTask, newTitle);
+function takeNewTaskTitle(idTask:string, newTitle:string,buttonStatus:TypeForButton){
+    const action = takeNewTaskTitleAC(idTask, newTitle,buttonStatus);
     dispatchTask(action)
 }
 function takeNewTitle(newTitle:string, todolistId:string){
@@ -66,7 +59,7 @@ function onDeleteList(idList:string){
      allTask={allTask}
      inputValue={inputValue}
      changeIsDoneStatus={changeIsDoneStatus}
-     buttonStatus={buttonStatus}
+     buttonStatus={task.buttonStatusState}
      takeNewTaskTitle={takeNewTaskTitle}
      takeNewTitle={takeNewTitle}
      ></Task>

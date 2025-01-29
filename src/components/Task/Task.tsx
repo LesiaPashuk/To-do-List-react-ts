@@ -1,8 +1,5 @@
-import { error } from "console"
 import '../Task/styleTask.css';
 import { ChangeEvent,KeyboardEvent, useState } from "react"
-//import { TypeForButton } from '../ListAndTasks/ListAndTasks'
-
 import { TypeForButton } from "../ListAndTasks/ListAndTasksWithReducer";
 import { EditableSpan } from "../EditableSpan/EditableSpan"
 export type TaskType={
@@ -19,9 +16,9 @@ export type PropsType={
     activeTask:Function
     allTask:Function
     inputValue:Function
-    changeIsDoneStatus:(idTask:string, isDone:boolean)=>void
-    buttonStatus:TypeForButton
-    takeNewTaskTitle:(idTask:string, newTitle:string, todolistId:string)=>void
+    changeIsDoneStatus:(idTask:string, buttonStatus:TypeForButton)=>void
+    buttonStatus:TypeForButton //(idTask:string, newTitle:string,buttonStatus:TypeForButton)
+    takeNewTaskTitle:(idTask:string, newTitle:string, buttonStatus:TypeForButton)=>void 
     takeNewTitle:(newTitle:string, todolistId:string)=>void
     onDeleteList:(idList:string)=>void
 }
@@ -75,12 +72,12 @@ function Task(props: PropsType){
                 const onRemoveHandler=()=>{
                     props.removeTask(task.id)
                 }
-                const changeIsDoneStatus=(e: ChangeEvent<HTMLInputElement>  )=>{
-                    props.changeIsDoneStatus(task.id, e.currentTarget.checked)
-                    console.log("wait you dont love me like i love you"+ e.currentTarget.checked)
+                const changeIsDoneStatus=(e: ChangeEvent<HTMLInputElement> )=>{
+                    props.changeIsDoneStatus(task.id, props.buttonStatus)
+                  
                 }
                 const onTakeNewTaskTitleFuo=(newValue:string)=>{
-                    props.takeNewTaskTitle(task.id, newValue, props.id)
+                    props.takeNewTaskTitle(task.id, newValue, props.buttonStatus)
                 }
                  return <li className="list-group-item"key={task.id}> 
                 <div className="align-self-center"> <EditableSpan title={task.title} onChange={ onTakeNewTaskTitleFuo}></EditableSpan></div>
@@ -102,4 +99,3 @@ function Task(props: PropsType){
     </div>)
 }
 export default Task;
-// class="btn btn-primary"
