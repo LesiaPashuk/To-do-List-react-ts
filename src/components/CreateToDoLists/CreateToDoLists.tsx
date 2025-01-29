@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { v1 } from 'uuid';
-import { ListAndTasks } from '../ListAndTasks/ListAndTasks';
+//import { ListAndTasks } from '../ListAndTasks/ListAndTasks';
+import { ListAndTasksWithReducer } from '../ListAndTasks/ListAndTasksWithReducer';
 import { PropsType } from '../Task/Task';
 import { title } from 'process';
 import { TaskType } from '../Task/Task';
@@ -47,13 +48,13 @@ function CreateToDoLists() {
   <button type="button" className="btn btn-dark" onClick={addNewList}>+</button>
    {arrListAndTask.map((el)=>{
     return <div key={el.id}>
-    <ListAndTasks
+    <ListAndTasksWithReducer
     id={el.id}
     title={el.title}
     listAndTask={el.listAndTask}
     updateListTitle={updateListTitle} 
     deleteList={deleteList}
-    ></ListAndTasks>
+    ></ListAndTasksWithReducer>
     </div>
    })}
   </div>);

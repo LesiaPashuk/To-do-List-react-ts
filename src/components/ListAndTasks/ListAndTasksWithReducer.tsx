@@ -1,63 +1,55 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import '../ListAndTasks/ListAndTasks.css';
 import Task from '../Task/Task';
-import { title } from 'process';
 import { TaskType, PropsType } from '../Task/Task';
 import { useState } from 'react';
 import { v1 } from 'uuid';
-import { TypeFormatFlags } from 'typescript';
 import { ListAndTaskType } from '../CreateToDoLists/CreateToDoLists';
+import { addTaskAC, allTaskAC, changeIsDoneStatusAC, onlyActiveAC, onlyCompletedAC, removeTaskAC, takeNewTaskTitleAC } from '../../state/todolist-reducer';
+import { todoListReducer } from '../../state/todolist-reducer';
+
 export type TypeForButton="typeAll"|"typeActive"|"typeDone";
-export function ListAndTasks(props:ListAndTaskType) {
+export function ListAndTasksWithReducer(props:ListAndTaskType) {
 const[buttonStatus, setButtonStatus]=useState<TypeForButton>("typeAll")
-const[task, setTask]=useState(props.listAndTask)
+const[task, dispatchTask ]=useReducer(todoListReducer,{
+  tasks:[] , 
+  history:[], 
+})
 const[isDone1, setIsDone1]=useState(false);
 const[constTask, setConstTask]=useState(props.listAndTask )
 function removeTask(id:string){
-  let arr= task.filter(task=>task.id!=id)
-  setTask(arr);
-  setConstTask(arr);
+  const action = removeTaskAC(id)
+  dispatchTask(action);
 }
 function completedTask(){
-  let arrComleted= constTask.filter(task=>task.isDone===true)
-  setTask(arrComleted);
-  setButtonStatus("typeDone")
+  const action = onlyCompletedAC()
+  dispatchTask(action)
+  
 } 
 function activeTask(){
-  let arrActive=constTask.filter(task=>task.isDone==false);
-  setTask(arrActive);
-  setButtonStatus("typeActive")
+  const action = onlyActiveAC();
+  dispatchTask(action)
 }
 function allTask(){
-  setTask(constTask);
-  setButtonStatus("typeAll")
+ const action = allTaskAC();
+ dispatchTask(action)
 }
-function changeIsDoneStatus(idTask:string, isDone:boolean){
-  let task = constTask.find(t=> t.id===idTask);
-  if(task){
-    task.isDone=isDone;
-  }
-  setConstTask([...constTask]);
-  setTask([...constTask]);
+function changeIsDoneStatus(idTask:string){
+  const action = changeIsDoneStatusAC(idTask);
+  dispatchTask(action);
 }
 //мой ввод 
 function inputValue(newTitle:string){
-  let newTask = {id:v1(), title:newTitle, isDone:isDone1};
-  let newTasks=[newTask, ...constTask];
-  setTask(newTasks);
-  setConstTask(newTasks);
+  const action = addTaskAC(newTitle);
+  dispatchTask(action);
 }
-function takeNewTaskTitle(idTask:string, newTitle:string, todolistId:string){
-    let task = constTask.find(t=> t.id===idTask);
-  if(task){
-    task.title=newTitle;
-  }
-  setConstTask([...constTask]);
-  setTask([...constTask]);
+function takeNewTaskTitle(idTask:string, newTitle:string){
+    const action = takeNewTaskTitleAC(idTask, newTitle);
+    dispatchTask(action)
 }
 function takeNewTitle(newTitle:string, todolistId:string){
     props.updateListTitle(todolistId, newTitle);
-}//className="d-flex align-items-start"
+}
 function onDeleteList(idList:string){
   props.deleteList(idList);
  }
@@ -67,7 +59,7 @@ function onDeleteList(idList:string){
     onDeleteList={onDeleteList}
      title={props.title}  
      id={props.id}
-     tasks={task} 
+     tasks={task.tasks} 
      removeTask={removeTask} 
      completedTask={completedTask} 
      activeTask={activeTask}

@@ -1,7 +1,9 @@
 import { error } from "console"
 import '../Task/styleTask.css';
 import { ChangeEvent,KeyboardEvent, useState } from "react"
-import { TypeForButton } from '../ListAndTasks/ListAndTasks'
+//import { TypeForButton } from '../ListAndTasks/ListAndTasks'
+
+import { TypeForButton } from "../ListAndTasks/ListAndTasksWithReducer";
 import { EditableSpan } from "../EditableSpan/EditableSpan"
 export type TaskType={
     id:string,
