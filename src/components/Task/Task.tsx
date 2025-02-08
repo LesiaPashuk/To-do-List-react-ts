@@ -1,34 +1,40 @@
 import '../Task/styleTask.css';
 import { ChangeEvent,KeyboardEvent, useState } from "react"
-import { TypeForButton } from "../ListAndTasks/ListAndTasksWithReducer";
 import { EditableSpan } from "../EditableSpan/EditableSpan"
+
 export type TaskType={
     id:string,
     title: string,
     isDone: boolean
 }
 export type PropsType={
-    id:string,
+    idList:string,
     title: string,
     tasks: Array<TaskType>,
-    removeTask:Function
-    completedTask:Function
-    activeTask:Function
-    allTask:Function
-    inputValue:Function
-    changeIsDoneStatus:(idTask:string, buttonStatus:TypeForButton)=>void
-    buttonStatus:TypeForButton //(idTask:string, newTitle:string,buttonStatus:TypeForButton)
-    takeNewTaskTitle:(idTask:string, newTitle:string, buttonStatus:TypeForButton)=>void 
-    takeNewTitle:(newTitle:string, todolistId:string)=>void
-    onDeleteList:(idList:string)=>void
+    buttonStatus:TypeForButton,
+    removeTask:(idList: string, idTask:string, buttonStatus: TypeForButton)=>void
+    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string)=>void
+    changeIsDoneStatus:(idList: string, idTask:string,buttonStatus:TypeForButton)=>void
+    completedTask:(idList: string)=>void
+    activeTask:(idList: string)=>void
+    allTask:(idList: string)=>void
+    takeNewTaskTitle:(idList: string, idTask:string, newTitle:string,buttonStatus:TypeForButton)=>void 
+    removeList:(idList:string)=>void
+     //(idTask:string, newTitle:string,buttonStatus:TypeForButton)
+   
+    takeNewTitle:(idList: string, newTitle:string)=>void
+   // onDeleteList:(idList:string)=>void
 }
- 
+export type TypeForButton="typeAll"|"typeActive"|"typeDone";
+
 function Task(props: PropsType){
+    
     const[newInputValue, setNewInputValue]=useState("")
     const[error, setError]=useState(false)
+
     const addNewInputValueFuo=()=>{
         if(newInputValue.trim()!=""){
-            props.inputValue(newInputValue)
+            props.addTask(newInputValue,props.buttonStatus, props.idList)
             setNewInputValue("")
         }
         else{setError(true)}
@@ -44,10 +50,12 @@ function Task(props: PropsType){
     }
     }
    const onTakeNewTitleFuo=(newValue:string)=>{
-        props.takeNewTitle(newValue, props.id);
+        props.takeNewTitle(props.idList,newValue);
+        
+        
    }
-   const onDeleteList = () => {
-    props.onDeleteList(props.id);
+   const removeList = () => {
+    props.removeList(props.idList);
 };
     return(
     <div>
@@ -56,7 +64,7 @@ function Task(props: PropsType){
                 <EditableSpan title={props.title} onChange={onTakeNewTitleFuo}></EditableSpan>
             </h2>
             <div className="align-self-center">
-            <button className="btn-close " aria-label="Close" onClick={onDeleteList}></button>
+            <button className="btn-close " aria-label="Close" onClick={removeList}></button>
             </div>
         </div>
         <div className="d-flex justify-content-center">
@@ -70,16 +78,18 @@ function Task(props: PropsType){
         <ul className="list-group">
             {props.tasks.map((task:TaskType)=>{
                 const onRemoveHandler=()=>{
-                    props.removeTask(task.id)
+                    props.removeTask(props.idList,task.id, props.buttonStatus)
                 }
                 const changeIsDoneStatus=(e: ChangeEvent<HTMLInputElement> )=>{
-                    props.changeIsDoneStatus(task.id, props.buttonStatus)
+                    props.changeIsDoneStatus(props.idList, task.id, props.buttonStatus)
                   
                 }
+              
                 const onTakeNewTaskTitleFuo=(newValue:string)=>{
-                    props.takeNewTaskTitle(task.id, newValue, props.buttonStatus)
+                    props.takeNewTaskTitle(props.idList,task.id, newValue, props.buttonStatus)
                 }
                  return <li className="list-group-item"key={task.id}> 
+                
                 <div className="align-self-center"> <EditableSpan title={task.title} onChange={ onTakeNewTaskTitleFuo}></EditableSpan></div>
                 < div className="d-flex justify-content-start">
                  <input type="checkbox" checked={task.isDone} onChange={changeIsDoneStatus}></input>
@@ -90,10 +100,11 @@ function Task(props: PropsType){
             </li>}
             )}
         </ul>
+        
         <div className="btn-group" role="group" aria-label="Basic example"> 
-        <button className={props.buttonStatus=="typeAll"?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>props.allTask()}>All</button>
-        <button className={props.buttonStatus=="typeActive"?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>props.activeTask()}>Active</button>
-        <button className={props.buttonStatus=="typeDone"?"btn btn-primary":"btn btn-outline-primary"} onClick={()=>props.completedTask()}>Completed</button>
+        <button className={props.buttonStatus=="typeAll"?"btn btn-primary":"btn btn-outline-primary"} onClick={() => props.allTask(props.idList)}>All</button>
+        <button className={props.buttonStatus=="typeActive"?"btn btn-primary":"btn btn-outline-primary"} onClick={() => props.activeTask(props.idList)}>Active</button>
+        <button className={props.buttonStatus=="typeDone"?"btn btn-primary":"btn btn-outline-primary"} onClick={() => props.completedTask(props.idList)}>Completed</button>
         </div>
        
     </div>)

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { AddNewListAC, addTaskAC, allTaskAC, changeIsDoneStatusAC, initialState2, onlyActiveAC, onlyCompletedAC, RemoveListAC, removeTaskAC, takeNewTaskTitleAC, takeNewTitleAC}from '../../state/reducerForAllToDoList';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-import { v1 } from 'uuid';
-//import { ListAndTasks } from '../ListAndTasks/ListAndTasks';
-import { ListAndTasksWithReducer } from '../ListAndTasks/ListAndTasksWithReducer';
-import { PropsType } from '../Task/Task';
-import { title } from 'process';
-import { TaskType } from '../Task/Task';
+import { TypeForButton } from '../Task/Task';
+import Task, { TaskType } from '../Task/Task';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+
 export type ListAndTaskType={
     id:string,
     title:string,
@@ -14,48 +13,74 @@ export type ListAndTaskType={
     deleteList:(idList:string)=>void
   }
 function CreateToDoLists() {
-  
-  const[arrListAndTask, setArrListAndTask]=useState<Array<ListAndTaskType>>([])
-  const addNewList=()=>{
-    const answer1 = prompt('Введите название нового to-do-list')
-    
-    if(answer1){
-      const newElem : ListAndTaskType  = {
-      id:v1(), 
-      title:answer1,
-      listAndTask:[], 
-      updateListTitle, // Передаем реальную функцию
-      deleteList: deleteList
-      }
-    setArrListAndTask([...arrListAndTask, newElem]);
-      }
+
+  const dispatchTask=useDispatch()
+  const arrayToDoList = useSelector((state:RootState)=>state.todoList.arrayToDoList)
+ 
+function removeTask(idList: string, idTask:string, buttonStatus: TypeForButton){
+  const action = removeTaskAC(idList,idTask, buttonStatus)
+  dispatchTask(action);
+}
+function addTask( newTitle:string,buttonStatus:TypeForButton,idList: string){
+  const action = addTaskAC(newTitle,buttonStatus, idList);
+  dispatchTask(action);
+}
+function changeIsDoneStatus(idList: string, idTask:string,buttonStatus:TypeForButton){
+  const action = changeIsDoneStatusAC(idList, idTask, buttonStatus);
+  dispatchTask(action);
+}
+function completedTask(idList: string){
+  const action = onlyCompletedAC(idList)
+  dispatchTask(action)
+} 
+function activeTask(idList: string){
+  const action = onlyActiveAC(idList);
+  dispatchTask(action)
+}
+function allTask(idList: string){
+ const action = allTaskAC(idList);
+ dispatchTask(action)
+}
+function takeNewTaskTitle(idList: string, idTask:string, newTitle:string,buttonStatus:TypeForButton){
+    const action = takeNewTaskTitleAC(idList, idTask, newTitle,buttonStatus);
+    dispatchTask(action)
+}
+const addNewList=( )=>{
+  const newListTitle = prompt('Введите название нового to-do-list')
+    if(newListTitle){
+      const action = AddNewListAC(newListTitle)
+      dispatchTask(action)
     }
-   const deleteList=(id:string)=>{
-    const filterArr= arrListAndTask.filter(list=>list.id!=id)
-    setArrListAndTask(filterArr);
-  }
-  const updateListTitle = (id: string, newTitle: string) =>{
-    const newListWithUpdateTitle=arrListAndTask.map((list)=>{
-      if(list.id==id){
-        return {...list, title:newTitle}
-      }
-      return list;
-    })
-    setArrListAndTask(newListWithUpdateTitle)
-    
-  }
-  return (<div className="d-flex align-items-start">
+  
+}
+function removeList(idList:string){
+  const action = RemoveListAC(idList)
+  dispatchTask(action)
+}
+function takeNewTitle(idList: string, newTitle:string){
+  const action =takeNewTitleAC(idList, newTitle)
+  dispatchTask(action)
+}
+  return (<div className="d-flex align-items-start" >
   <button type="button" className="btn btn-dark" onClick={addNewList}>+</button>
-   {arrListAndTask.map((el)=>{
-    return <div key={el.id}>
-    <ListAndTasksWithReducer
-    id={el.id}
-    title={el.title}
-    listAndTask={el.listAndTask}
-    updateListTitle={updateListTitle} 
-    deleteList={deleteList}
-    ></ListAndTasksWithReducer>
-    </div>
+   {arrayToDoList.map((el)=>{
+    return  <div className="d-flex align-items-start" key={el.idList}>
+    <Task 
+    idList={el.idList}
+    title={el.listTitle} 
+    tasks={el.tasks}
+    buttonStatus={el.buttonStatusState}
+    removeTask={removeTask} 
+    addTask={addTask}
+    changeIsDoneStatus={changeIsDoneStatus}
+    completedTask={completedTask} 
+    activeTask={activeTask}
+    allTask={allTask}
+    takeNewTaskTitle={takeNewTaskTitle}
+    removeList={removeList}
+    takeNewTitle={takeNewTitle}
+    ></Task>
+   </div>
    })}
   </div>);
 }
