@@ -1,0 +1,119 @@
+.settingFortaskInput{
+    display: flex;
+    background-color: rgba(240, 248, 255, 0.285);
+}
+.priorityDiv img{
+   height: 21px;
+   padding: 0px;
+}
+.divForIconPriority{
+    border:1px solid rgb(249, 249, 249);
+    height: 30px;
+    width: 30px;
+    border-radius: 4px;
+}
+.allFormForInputAndSettings {
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(53, 53, 53);
+    height: 170px;
+    width: 300px;
+    padding: 10px;
+  }
+  .form-control{
+    position: relative;
+    width: 100%;
+    background-color: rgb(83, 83, 83);
+  }
+  
+  .datePicker .MuiButtonBase-root {
+    color: white !important;
+    padding: 0px;
+  }
+ .datePicker .MuiInputBase-root{
+    width: 135px;
+    height: 30px !important;
+    font-size: 15px !important;
+    color: #ffffff!important;
+ }
+ .datePicker .MuiOutlinedInput-notchedOutline {
+    border-color: rgb(255, 255, 255) !important;
+  }
+  
+  .datePicker .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #000000 !important;
+  }
+  
+  .datePicker .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #c56666 !important;
+  }
+  
+ /* Стили для контейнера приоритетов */
+.priority-container {
+    position: relative;
+    margin: 10px 0;
+  }
+  
+  /* Стили для кнопки переключения */
+ 
+  
+  /* Стили для формы приоритетов */
+  .priority-form {
+    background-color: #383838;
+    padding: 5px;
+    border-radius: 8px;
+    margin-top: 10px;
+    box-shadow: 0 2px 4px rgb(144, 144, 144);
+    width: 200px;
+    color: #ffffff;
+  }
+  
+  .priority-fieldset {
+    border: 1px solid #4e4e4e;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  /* Стили для опций приоритета */
+  .priority-option {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+  }
+  
+  .priority-label {
+    margin-left: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    flex-grow: 1;
+  }
+  
+  .reminder{
+    border-radius: 8px;
+    width: 30px;
+    height: 30px;
+    
+    color: #ffffff;
+  }
+  .timePicker .MuiButtonBase-root {
+    color: white !important;
+    padding: 0px;
+  }
+ .timePicker .MuiInputBase-root{
+    width: 115px;
+    height: 30px !important;
+    font-size: 15px !important;
+    color: #ffffff!important;
+ }
+ .timePicker .MuiOutlinedInput-notchedOutline {
+    border-color: rgb(255, 255, 255) !important;
+  }
+  
+  .timePicker .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: #000000 !important;
+  }
+  
+  .timePicker .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #c56666 !important;
+  }
+  

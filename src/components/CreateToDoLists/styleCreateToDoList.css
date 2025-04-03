@@ -1,0 +1,10 @@
+btn-dark{
+    background-color: #cb8f8f ; /* Новый цвет фона */
+        border-color: #5a0101 !important; 
+}
+.list{
+    width: 400px;
+    height: auto;
+    background-color: aliceblue;
+    
+}

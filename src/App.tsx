@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
-import CreateToDoLists from './components/CreateToDoLists/CreateToDoLists';
+import {CreateToDoLists }from './components/CreateToDoLists/CreateToDoLists';
 import { useState } from 'react';
  export type typeForButtonNav="TaskToDoList"|"Сalendar"|"Habit"|"Matrix"|"Timer";
  function App() {

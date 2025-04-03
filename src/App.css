@@ -1,15 +1,30 @@
 .App {
   text-align: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
 }
 .error{
   border: red 1px solid;
+  border-radius: 10px;
+  width: 260px;
+}
+nav{
+  margin-top: 0;
+  padding: 0;
+  width: 340px;
+  height: 100vh;
+  background-color: rgb(43, 43, 43);
 }
 
 .error-massage{
-  color:red;
+  color:rgb(191, 0, 0);
+  position: absolute;
+  margin-left: -47px;
+  margin-top: 5px;
 }
 .currentButton{
-  color:aqua;
+  color:rgb(255, 0, 191);
 }
 .d-flex{
   padding-right: 40px;
