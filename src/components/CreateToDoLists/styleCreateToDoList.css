@@ -1,10 +1,44 @@
-btn-dark{
-    background-color: #cb8f8f ; /* Новый цвет фона */
-        border-color: #5a0101 !important; 
+
+.list {
+
+    position: absolute;
+    margin-top: 50px;
+    display: flex; /* Делаем контейнер flex-контейнером */
+    flex-wrap: nowrap; /* Позволяет элементам переноситься на новую строку */
+    gap: 10px; /* Отступ между элементами */
+    width: 100%; /* Ширина на весь экран */
+    padding: 0px 50px 0px 50px;
+    box-sizing: border-box;
 }
-.list{
-    width: 400px;
-    height: auto;
-    background-color: aliceblue;
+
+.d-flex.align-items-start {
+    flex: 0 0 400px; /* Фиксированная ширина 400px, не растягивается и не сжимается */
+  
+    border-radius: 8px;
+    padding: 55px;
+}
+.buttonAddList{
+    position: absolute;
+    width: 300px;
+    margin-left: 30%;
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+    border: 0cap;
+    font-size: 20px;
+}
+.buttonAddList:hover {
+    color: #d8d8d8; /* Тёмно-красный, как в вашей теме */
+}
+.buttonAddTask{
+    width: 200px;
+    color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0);
+    border: 0cap;
+    font-size: 16px;
+    position: absolute;
+    margin-top: 70px;
     
+}
+.buttonAddTask:hover {
+    color: #5a0101; /* Тёмно-красный, как в вашей теме */
 }

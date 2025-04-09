@@ -30,3 +30,6 @@ nav{
   padding-right: 40px;
   margin-top: 20px;
 }
+nav{
+  min-width: 350px;
+}

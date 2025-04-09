@@ -13,7 +13,7 @@ type removeTask={
 }
 type addTask={
     priority:PriorityType, 
-    data?:string,
+    data:Moment|null,
     idList:string,
     newTitle:string,
     type:"add-task",
@@ -70,7 +70,7 @@ export type ActionType=removeTask | addTask | changeIsDoneStatus | onlyCompleted
 export const removeTaskAC=(idList: string, idTask:string, buttonStatus: TypeForButton):removeTask=>{
     return {type:"remove-task", idList:idList,idTask:idTask, buttonStatus: buttonStatus}
 }
-export const addTaskAC=( newTitle:string,buttonStatus:TypeForButton,idList: string,data:string|undefined,priority:PriorityType):addTask=>{
+export const addTaskAC=( newTitle:string,buttonStatus:TypeForButton,idList: string,data:Moment|null,priority:PriorityType):addTask=>{
     return {type:"add-task", newTitle: newTitle, buttonStatus:buttonStatus,idList:idList, data:data,priority:priority}
 }
 export const changeIsDoneStatusAC=(idList: string, idTask:string,buttonStatus:TypeForButton):changeIsDoneStatus=>{

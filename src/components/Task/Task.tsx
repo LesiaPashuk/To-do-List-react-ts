@@ -9,12 +9,13 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import dayjs from 'dayjs';
 import { Moment } from 'moment';
-
+import moment from 'moment';
+import 'moment/locale/ru'; 
 export type TaskType={
     id:string,
     title: string,
     isDone: boolean
-    data: string|undefined, 
+    data: Moment|null, 
     priority: PriorityType,
 }
 export type ButtonCelenderType={
@@ -23,7 +24,7 @@ export type ButtonCelenderType={
     tasks: Array<TaskType>,
     buttonStatus:TypeForButton,
     buttonCelenderActiveStatus:boolean,
-    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string,data:string|undefined,priority:PriorityType)=>void
+    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string,data:Moment|null,priority:PriorityType)=>void
     takeNewTitle:(idList: string, newTitle:string)=>void,
     fuoButtonCelenderActiveStatusInForm:(buttonCelenderActiveStatus:boolean, idList:string)=>void
 }
@@ -33,7 +34,7 @@ export type PropsType={
     tasks: Array<TaskType>,
     buttonStatus:TypeForButton,
     removeTask:(idList: string, idTask:string, buttonStatus: TypeForButton)=>void
-    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string,data:string|undefined,priority:PriorityType)=>void
+    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string,data:Moment|null,priority:PriorityType)=>void
     changeIsDoneStatus:(idList: string, idTask:string,buttonStatus:TypeForButton)=>void
     completedTask:(idList: string)=>void
     activeTask:(idList: string)=>void
@@ -54,8 +55,8 @@ export const Task=React.memo(function Task(props: PropsType){
 
     const addNewInputValueFuo=()=>{
         if(newInputValue.trim()!=""){
-            const dateString = selectedDate?.toISOString();
-      props.addTask(newInputValue, props.buttonStatus, props.idList, dateString, valueForm);
+           
+      props.addTask(newInputValue, props.buttonStatus, props.idList, selectedDate, valueForm);
             setNewInputValue("")
         }
         else{setError(true)}
@@ -103,35 +104,38 @@ export const Task=React.memo(function Task(props: PropsType){
           addNewInputValueFuo(); 
         }
       },[addNewInputValueFuo])
-      
+    const dataConvert=useCallback((data:Moment|null)=>{
+        moment.locale('ru');
+        return data?.format('DD MMMM YYYY')
+    },[])
     return(
     <div>
         
-        <div className="d-flex align-items-start">
+        <div className="divH2">
             <h2 >
                 <EditableSpan title={props.title} onChange={onTakeNewTitleFuo}></EditableSpan>
             </h2>
            
-            <div className="align-self-center">
+            <div className="closeList">
             <button className="btn-close " aria-label="Close" onClick={removeList}></button>
             </div>
-        </div>
+            </div>
+      
        
         <ul className="list-group">
             {props.tasks.map((task:TaskType)=>{
                 
-                 return <li className="list-item"key={task.id}> 
-
+                 return <li className="list-item"key={task.id}>
+                 <div>
                  <h4>
                     <EditableSpan title={task.title} onChange={ onTakeNewTaskTitleFuo(task.id)}></EditableSpan><br />
-                    {task.data}   <br />    
-                    {task.priority}         
-                    </h4> 
+                 
+                    </h4> {task.data?<p className='dateText'>{dataConvert(task.data)}</p>:<></>}
                    
+                  </div>
                  <div className="box">
                  <div className="item">
-                    
-                    <div className="checkbox-rect">
+                    <div className={`checkbox-rect-${task.priority}`}>
                         <input type="checkbox"  id={`checkbox-rect-${task.id}`}  name={`check-${task.id}`} checked={task.isDone} onChange={changeIsDoneStatus(task.id)}/>
                         <label htmlFor={`checkbox-rect-${task.id}`}></label>
                         
@@ -140,9 +144,7 @@ export const Task=React.memo(function Task(props: PropsType){
                 </div> 
                 </div> 
                
-                 <button className="btn-close" aria-label="Close"onClick={onRemoveHandler(task.id)}>
-                
-                 </button>
+                 <button className="btn-close" aria-label="Close"onClick={onRemoveHandler(task.id)}> </button>
                 
             </li>}
             )}

@@ -30,12 +30,11 @@ export const ButtonCelender = React.memo(function ButtonCelender(
   },[props.fuoButtonCelenderActiveStatusInForm])
   const addNewInputValueFuo = () => {
     if (newInputValue.trim() != "") {
-      const dateString = selectedDate?.toISOString();
       props.addTask(
         newInputValue,
         props.buttonStatus,
         props.idList,
-        dateString,
+        selectedDate,
         valueForm
       );
       setNewInputValue("");
@@ -69,13 +68,14 @@ export const ButtonCelender = React.memo(function ButtonCelender(
   );
   return (
     <div className="allFormForInputAndSettings">
-      <div className="lol">
+      <div className="stringWithSettings">
         <input
           type="text"
+          placeholder="Подготовиться к экзамену по..."
           value={newInputValue}
           onChange={takeNewTitleFuo}
           onKeyDown={handleKeyDown}
-          className={error ? "error" : "form-control "}
+          className={error ? "error" : "inputForm"}
         ></input>
 
         {error && (
@@ -104,7 +104,7 @@ export const ButtonCelender = React.memo(function ButtonCelender(
         <div className="priorityDiv">
           <div className="divForIconPriority">
           <img
-            src="https://img.icons8.com/?size=100&id=WshQLhK5xhRV&format=png&color=ffffff"
+            src="https://img.icons8.com/?size=100&id=WshQLhK5xhRV&format=png&color=a2a2a2"
             alt="priority"
             onClick={() => {
               setPriorityDiv(!priorityDiv);
@@ -238,10 +238,12 @@ export const ButtonCelender = React.memo(function ButtonCelender(
         </div>
         
       </div>
+      <div className="buttonSaveAndClose">
       <button onClick={addNewInputValueFuo} className="btn btn-primary">
-        save
+        Save
       </button >
-      <button onClick={closeInput}>x</button>
+      <button onClick={closeInput} className="btn btn-primary">Close</button>
+    </div>
     </div>
   );
 });

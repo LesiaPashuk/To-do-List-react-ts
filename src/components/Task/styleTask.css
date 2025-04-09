@@ -1,123 +1,210 @@
-.list-group{
-    padding: 10px 0 10px 0;
- 
+.list-group {
+  padding: 150px 0px 10px 0px;
+  margin-top: -40px;
 }
-.form-control{
-    width: 260px;
+.form-control {
+  width: 260px;
 }
 .list-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap; /* Позволяет элементам переноситься */
-    border-radius: 10px;
-    margin-bottom: 10px;
-    width: 260px;
-    min-height: 50px; /* Минимальная высота */
-    height: auto; /* Позволяет увеличивать высоту */
-    background-color: rgb(54, 54, 54);
-    border: 1px solid rgb(68, 68, 68);
-    list-style-type: none;
-    padding: 10px;
-    box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Позволяет элементам переноситься */
+  border-radius: 10px;
+  margin-bottom: 10px;
+  margin-left: 13px;
+  width: 260px;
+  min-height: 70px; /* Минимальная высота */
+  height: auto; /* Позволяет увеличивать высоту */
+  background-color: rgb(54, 54, 54);
+  border: 1px solid rgb(68, 68, 68);
+  list-style-type: none;
+  padding: 30px 10px 30px 10px;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 4px 2px rgb(25, 25, 25);
 }
-
 
 h4 {
-    color: #ffffff;
-    font-size: 100%;
-    font-family: 'helvetica'; 
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-    text-align: center; 
-    flex-grow: 1;
-    max-width: 70%;
-    word-wrap: break-word;
-    }
-   
-h2{
-    color: #ffffff;
-    font-family: 'helvetica'; 
-    font-weight: bold;
-    
+  color: #ffffff;
+  font-size: 100%;
+  font-family: "helvetica";
+  position: relative;
+  left: 37.5px;
+  flex-grow: 1;
+  max-width: 170px;
+  word-wrap: break-word;
+  text-align: left;
 }
-.btn-close {
-    filter: invert(100%);
-     align-self: center;
-    margin-left: 10px;
-}
-      .box {
-        padding: 0.5em;
-        position: absolute;
-      }
-      .item {
-        margin-bottom: 1.3em;
-      }
-      
-      .checkbox-rect input[type="checkbox"] {
-        display: none;
-      }
-      .checkbox-rect input[type="checkbox"] + label {
-        display: block;
-        position: relative;
-        padding-left: 35px;
-        margin-bottom: 20px;
-        font: 14px/20px "Open Sans", Arial, sans-serif;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-      }
-      
-      .checkbox-rect input[type="checkbox"]:hover + label:before {
-        background: #5a0101;
-        box-shadow: inset 0px 0px 0px 2px #ffffff;
-      }
-      .checkbox-rect input[type="checkbox"] + label:last-child {
-        margin-bottom: 0;
-      }
-      .checkbox-rect input[type="checkbox"] + label:before {
-        content: "";
-        display: block;
-        width: 1.4em;
-        height: 1.4em;
-        border: 1px solid #000000;
-        border-radius: 0.2em;
-        position: absolute;
-        left: 0;
-        top: 0;
-        -webkit-transition: all 0.2s, background 0.2s ease-in-out;
-        transition: all 0.2s, background 0.2s ease-in-out;
-        background: #ffffff;
-      }
-      .checkbox-rect input[type="checkbox"]:checked + label:before {
-        width: 1.3em;
-        height: 1.3em;
-        border-radius: 0.2em;
-        border: 2px solid #ffffff;
-        -webkit-transform: rotate(90deg);
-        transform: rotate(90deg);
-        background: #8bb35c;
-        box-shadow: 0 0 0 1px #282828;
-      }
-      .btn-primary {
-        background-color: #5a0101 !important; /* Новый цвет фона */
-        border-color: #5a0101 !important; /* Цвет рамки */
-      }
-      
 
-      .btn-outline-primary {
-        background-color: #ffffff !important; 
-        color: #4c0000 !important; /* Цвет текста */
-        border-color: #5a0101 !important; /* Цвет рамки */
-      }
-      
-      .btn-outline-primary:hover {
-        background-color: #5a0101 !important;
-        color: rgb(255, 255, 255) !important;
-      }
-      .btn-group{
-        position: absolute;
-        transform: translateX(-72.5%);
-      }
+.btn-close {
+  filter: invert(100%);
+  align-self: center;
+  margin-left: 150px;
+  position: absolute;
+}
+.box {
+  padding: 0.5em;
+  position: absolute;
+}
+.item {
+  margin-bottom: 1.3em;
+}
+
+.checkbox-rect-hightPriority input[type="checkbox"],
+ .checkbox-rect-middlePriority input[type="checkbox"],
+ .checkbox-rect-lowPriority input[type="checkbox"]{
+  display: none;
+}
+.checkbox-rect-hightPriority input[type="checkbox"] + label,
+.checkbox-rect-middlePriority input[type="checkbox"] + label,
+.checkbox-rect-lowPriority input[type="checkbox"] + label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 20px;
+  font: 14px/20px "Open Sans", Arial, sans-serif;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.checkbox-rect-hightPriority input[type="checkbox"]:hover + label:before,
+.checkbox-rect-middlePriority input[type="checkbox"]:hover + label:before, 
+.checkbox-rect-lowPriority input[type="checkbox"]:hover + label:before {
+  background: #5a0101;
+  box-shadow: inset 0px 0px 0px 2px #ffffff;
+}
+.checkbox-rect-hightPriority input[type="checkbox"] + label:last-child,
+.checkbox-rect-middlePriority input[type="checkbox"] + label:last-child,
+.checkbox-rect-lowPriority input[type="checkbox"] + label:last-child{
+  margin-bottom: 0;
+}
+.checkbox-rect-hightPriority input[type="checkbox"]:checked + label:before,
+.checkbox-rect-middlePriority input[type="checkbox"]:checked + label:before,
+.checkbox-rect-lowPriority input[type="checkbox"]:checked + label:before {
+  width: 1.3em;
+  height: 1.3em;
+  border-radius: 2em;
+  border: 2px solid #ffffff;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  background: #8bb35c;
+  box-shadow: 0 0 0 1px #282828;
+}
+/*Высокий приоритет*/
+.checkbox-rect-hightPriority input[type="checkbox"] + label:before {
+  content: "";
+  display: block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1.5px solid  #b31414;
+  border-radius: 2em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transition: all 0.2s, background 0.2s ease-in-out;
+  transition: all 0.2s, background 0.2s ease-in-out;
+  background:  hsla(0, 80%, 39%, 0.286);
+}
+
+/*Средний приоритет*/
+.checkbox-rect-middlePriority input[type="checkbox"] + label:before {
+  content: "";
+  display: block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1.5px solid rgb(210, 86, 15);
+  border-radius: 2em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transition: all 0.2s, background 0.2s ease-in-out;
+  transition: all 0.2s, background 0.2s ease-in-out;
+  background: hsla(22, 87%, 44%, 0.286);
+}
+
+/*Низкий приоритет*/
+.checkbox-rect-lowPriority input[type="checkbox"] + label:before {
+  content: "";
+  display: block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1.5px solid rgb(162, 162, 162);
+  border-radius: 2em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transition: all 0.2s, background 0.2s ease-in-out;
+  transition: all 0.2s, background 0.2s ease-in-out;
+  background: #ffffff00;
+}
+.btn-primary {
+  background-color: #5a0101 !important; /* Новый цвет фона */
+  border-color: #5a0101 !important; /* Цвет рамки */
+}
+
+.btn-outline-primary {
+  background-color: #ffffff !important;
+  color: #4c0000 !important; /* Цвет текста */
+  border-color: #5a0101 !important; /* Цвет рамки */
+}
+
+.btn-outline-primary:hover {
+  background-color: #5a0101 !important;
+  color: rgb(255, 255, 255) !important;
+}
+.btn-group {
+  position: relative;
+  transform: translateX(-1%);
+}
+.divH2 {
+  display: flex; /* Включаем flexbox */
+  justify-content: center; /* Горизонтальное центрирование */
+  align-items: center;
+  position: relative;
+  margin-top: -21px;
+  margin-bottom: 90px;
+  height: 50px;
+  width: 288px;
+}
+.divH2 h2 {
+  color: #ffffff;
+  font-family: "Helvetica", sans-serif;
+  font-weight: bold;
+  margin: 0; /* Убираем стандартные отступы */
+  padding: 0; /* Убираем стандартные отступы */
+  text-align: center; /* Центрирование текста */
+  width: 100%; /* Занимает всю ширину контейнера */
+  /* Убраны padding-bottom и margin-left чтобы не мешали центрированию */
+}
+.closeList button {
+  margin-top: -14px;
+  margin-left: 0px;
+}
+.list-item button {
+  margin-left: 210px;
+}
+.divButtonStatus {
+  height: 50px;
+  width: 288px;
+  position: absolute;
+  margin-top: 40px;
+  display: flex; /* Включаем flexbox */
+  justify-content: center; /* Горизонтальное центрирование */
+  align-items: center;
+}
+.divButtonStatus button {
+  margin-top: -5px;
+}
+.dateText{
+  position: relative;
+  color: #b31414;
+  border: 1px solid  #b31414;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 100px;
+  margin-left: 37.5px;
+  margin-top: 10px;
+  margin-bottom: -20px;
+}

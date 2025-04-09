@@ -47,7 +47,7 @@ export const CreateToDoLists = React.memo(function () {
     [dispatchTask]
   );
   const addTask = useCallback(
-    (newTitle: string, buttonStatus: TypeForButton, idList: string,data:string|undefined,priority:PriorityType) => {
+    (newTitle: string, buttonStatus: TypeForButton, idList: string,data:Moment|null,priority:PriorityType) => {
       const action = addTaskAC(newTitle, buttonStatus, idList, data,priority );
       dispatchTask(action);
     },
@@ -121,25 +121,17 @@ export const CreateToDoLists = React.memo(function () {
     },
     [dispatchTask]
   )
-//  const [buttonCelenderStatusActive, setButtonCelenderStatusActive]=useState<boolean>(false);
-  return (
-    <div className="list">
-      <button type="button" className="btn-dark" onClick={addNewList}>
+return (
+
+   <>
+      <button type="button" className="buttonAddList" onClick={addNewList}>
         Добавить новый лист
       </button>
+       <div className="list">
       {arrayToDoList.map((el) => {
         return (
           <div className="d-flex align-items-start" key={el.idList}>
-            {el.buttonCelenderActiveStatus? <ButtonCelender
-              idList={el.idList}
-              title={el.listTitle}
-              tasks={el.tasks}
-              buttonStatus={el.buttonStatusState}
-              addTask={addTask}
-              takeNewTitle={takeNewTitle}
-              buttonCelenderActiveStatus={el.buttonCelenderActiveStatus}
-              fuoButtonCelenderActiveStatusInForm={changeButtonCelenderActiveStatus}
-            ></ButtonCelender>:<></>}
+            
            
             <Task
               idList={el.idList}
@@ -156,11 +148,24 @@ export const CreateToDoLists = React.memo(function () {
               removeList={removeList}
               takeNewTitle={takeNewTitle}
             ></Task>
-            {el.buttonCelenderActiveStatus==false? <button type="button" onClick={()=>changeButtonCelenderActiveStatus(el.buttonCelenderActiveStatus,el.idList)}>Добавить задачу</button>:<></>}
-           
+            {el.buttonCelenderActiveStatus==false? 
+              <div className="divButtonStatus">
+                <button className="buttonAddTask" type="button" onClick={()=>changeButtonCelenderActiveStatus(el.buttonCelenderActiveStatus,el.idList)}>+ Добавить задачу</button>
+              </div>:<></>}
+           {el.buttonCelenderActiveStatus? <ButtonCelender
+              idList={el.idList}
+              title={el.listTitle}
+              tasks={el.tasks}
+              buttonStatus={el.buttonStatusState}
+              addTask={addTask}
+              takeNewTitle={takeNewTitle}
+              buttonCelenderActiveStatus={el.buttonCelenderActiveStatus}
+              fuoButtonCelenderActiveStatusInForm={changeButtonCelenderActiveStatus}
+            ></ButtonCelender>:<></>}
           </div>
         );
       })}
     </div>
-  );
-});
+    </>);
+})
+;

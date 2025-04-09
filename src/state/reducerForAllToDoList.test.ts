@@ -2,6 +2,7 @@ import { AddNewListAC, addTaskAC, allTaskAC, changeIsDoneStatusAC, initialState2
 import {v1} from 'uuid';
 import { TaskType } from "../components/Task/Task";
 import { TypeForButton } from '../components/Task/Task';
+import moment, { Moment } from 'moment';
 
 test('remove-task',()=>{
     const st: TypeForButton = "typeAll"; 
@@ -13,24 +14,24 @@ test('remove-task',()=>{
     
     let idList1=v1();
     let idList2=v1();
-
+    const specificDate: Moment = moment('2023-12-31');
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1, 
         buttonCelenderActiveStatus:false,
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true, data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true, data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2, 
@@ -55,29 +56,30 @@ test('add-task',()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1, 
         buttonCelenderActiveStatus:false,
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2, 
         buttonCelenderActiveStatus:false,
     }]}
-    const endState= reducerForAllToDoList(startState,addTaskAC("lol", st, idList1,"","hightPriority"))
+    const endState= reducerForAllToDoList(startState,addTaskAC("lol", st, idList1,specificDate,"hightPriority"))
     expect(endState.arrayToDoList.length).toBe(2)
     expect(endState.arrayToDoList[0].tasks.length).toBe(3)
     expect(endState.arrayToDoList[0].history.length).toBe(3)
@@ -96,23 +98,25 @@ test("change-is-done-status", ()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
+
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1, 
         buttonCelenderActiveStatus:false,
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2, 
@@ -137,23 +141,25 @@ test("only-completed", ()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
+
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:false,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:false,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:false,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:false,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1, 
         buttonCelenderActiveStatus:false,
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2, 
@@ -177,23 +183,25 @@ test("only-active", ()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
+
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:false,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:false,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:false,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:false,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1, 
         buttonCelenderActiveStatus:false,
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2,
@@ -217,12 +225,14 @@ test("all-tasks", ()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
+
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:false,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:false,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1, 
@@ -230,8 +240,8 @@ test("all-tasks", ()=>{
     }, 
     {
         tasks:  [],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2,
@@ -258,23 +268,25 @@ test('take-new-task-title',()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
+
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1, 
         buttonCelenderActiveStatus:false,
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2, 
@@ -295,23 +307,25 @@ test('add-new-list',()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
+
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1,
         buttonCelenderActiveStatus:false, 
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2, 
@@ -335,23 +349,25 @@ test('add-new-list',()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
+
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1,
         buttonCelenderActiveStatus:false, 
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2,
@@ -375,23 +391,25 @@ test('take-new-title',()=>{
     let idList1=v1();
     let idList2=v1();
 
+    const specificDate: Moment = moment('2023-12-31');
+
     const startState:initialState2={
         arrayToDoList:[
             {
-        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId2, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId1, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId2, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"1",
         idList:idList1, 
         buttonCelenderActiveStatus:false,
     }, 
     {
-        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
-        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:"",priority:"hightPriority"},
-                {id:taskId4, title:"whhat", isDone:true,data:"",priority:"hightPriority"},],
+        tasks:  [{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
+        history:[{id: taskId3, title:"whhat to learn", isDone:true,data:specificDate,priority:"hightPriority"},
+                {id:taskId4, title:"whhat", isDone:true,data:specificDate,priority:"hightPriority"},],
         buttonStatusState:st,
         listTitle:"2",
         idList:idList2, 
