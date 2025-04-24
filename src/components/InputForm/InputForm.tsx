@@ -72,7 +72,7 @@ export const InputForm = React.memo(function InputForm(
       <div className="stringWithSettings">
         <input
           type="text"
-          placeholder="Подготовиться к экзамену по..."
+          placeholder="Prepare for the exam..."
           value={newInputValue}
           onChange={takeNewTitleFuo}
           onKeyDown={handleKeyDown}
@@ -81,7 +81,7 @@ export const InputForm = React.memo(function InputForm(
 
         {error && (
           <div className="error-massage" onClick={() => setError(!error)}>
-            заполнение обязательно
+            You must fill it out
           </div>
         )}
       </div>
@@ -117,7 +117,7 @@ export const InputForm = React.memo(function InputForm(
               <form className="priority-form">
                 <fieldset className="priority-fieldset">
                   <div className="priority-option">
-                    <label className="priority-label">Высокий приоритет</label>
+                    <label className="priority-label">High priority</label>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       x="0px"
@@ -155,7 +155,7 @@ export const InputForm = React.memo(function InputForm(
                     </svg>
                   </div>
                   <div className="priority-option">
-                    <label className="priority-label">Средний приоритет</label>
+                    <label className="priority-label">Medium priority</label>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       x="0px"
@@ -193,7 +193,7 @@ export const InputForm = React.memo(function InputForm(
                     </svg>
                   </div>
                   <div className="priority-option">
-                    <label className="priority-label">Низкий приоритет</label>
+                    <label className="priority-label">Low priority</label>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       x="0px"

@@ -78,6 +78,7 @@
   .priorityDiv{
      background-color:  rgb(53, 53, 53);
     margin-left: 10px;
+    position: relative;
   }
   /* Стили для формы приоритетов */
   .priority-form {
@@ -88,6 +89,7 @@
     box-shadow: 0px 0px 4px 2px rgb(162, 162, 162);
     width: 200px;
     color: #ffffff;
+    position:absolute;
   }
   
   .priority-fieldset {
