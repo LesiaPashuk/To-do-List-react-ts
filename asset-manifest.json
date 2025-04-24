@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/LesiaPashuk/To-do-List-react-ts/static/css/main.f3284869.css",
+    "main.js": "/LesiaPashuk/To-do-List-react-ts/static/js/main.0b50fcc1.js",
+    "static/js/453.79dacc0e.chunk.js": "/LesiaPashuk/To-do-List-react-ts/static/js/453.79dacc0e.chunk.js",
+    "index.html": "/LesiaPashuk/To-do-List-react-ts/index.html",
+    "main.f3284869.css.map": "/LesiaPashuk/To-do-List-react-ts/static/css/main.f3284869.css.map",
+    "main.0b50fcc1.js.map": "/LesiaPashuk/To-do-List-react-ts/static/js/main.0b50fcc1.js.map",
+    "453.79dacc0e.chunk.js.map": "/LesiaPashuk/To-do-List-react-ts/static/js/453.79dacc0e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f3284869.css",
+    "static/js/main.0b50fcc1.js"
+  ]
+}
