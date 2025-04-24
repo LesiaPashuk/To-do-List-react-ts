@@ -1,5 +1,5 @@
 import React, { useCallback } from "react"
-
+import './editableSpan.css'
 import { ChangeEvent,KeyboardEvent, useState } from "react"
 type EditableSpanPropdType={
     title:string 
@@ -16,7 +16,7 @@ export const EditableSpan=React.memo(function EditableSpan(props:EditableSpanPro
         props.onChange(newInputValue)
     },[ props.onChange])
     return editableState
-    ?<input className="form-control border-success"onBlur={activeEditableSate} value={newInputValue}  onChange={takeNewTitleFuo} autoFocus={true}></input>
+    ?<input className=""onBlur={activeEditableSate} value={newInputValue}  onChange={takeNewTitleFuo} autoFocus={true}></input>
     :<span  className="span"onDoubleClick={activeEditableSate}>{newInputValue}</span>
     
 })

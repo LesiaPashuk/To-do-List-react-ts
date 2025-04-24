@@ -2,7 +2,8 @@ import {
   AddNewListAC,
   addTaskAC,
   allTaskAC,
-  changeButtonCelenderActiveStatusAC,
+
+  changeInputFormActiveStatusAC,
   changeIsDoneStatusAC,
   initialState2,
   onlyActiveAC,
@@ -11,34 +12,34 @@ import {
   removeTaskAC,
   takeNewTaskTitleAC,
   takeNewTitleAC,
+  changeAddListButtonStatusAC,
 } from "../../state/reducerForAllToDoList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { PriorityType, TypeForButton } from "../Task/Task";
 import { Task, TaskType } from "../Task/Task";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import React, { useCallback, useState } from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import "../CreateToDoLists/styleCreateToDoList.css";
 import { createSelector } from "reselect";
-import { ButtonCelender } from "../ButtonCelender/ButtonCelender";
+import { InputForm } from "../InputForm/InputForm";
 import { Moment } from "moment";
-/*
-export type ListAndTaskType = {
-  id: string;
-  title: string;
-  listAndTask: Array<TaskType>;
- // buttonCelenderStatusActive:boolean, 
-  updateListTitle: (newTitle: string, todolistId: string) => void;
-  deleteList: (idList: string) => void;
-};*/
+import { EditableSpan } from "../EditableSpan/EditableSpan";
+import { Input } from "@mui/material";
+
 export const CreateToDoLists = React.memo(function () {
   const dispatchTask = useDispatch();
   const selectToDoList = (state: RootState) => state.todoList.arrayToDoList;
+  const selectAddListButton=(state:RootState)=>state.todoList.addListButtonStatus;
   const memorizedArrayToDoList = createSelector(
     [selectToDoList],
     (list) => list
   );
+ 
+  const addListButtonStatus= useSelector(selectAddListButton)
+ 
   const arrayToDoList = useSelector(memorizedArrayToDoList);
+  const [newListTitle,setNewListTitle]=useState("")
   const removeTask = useCallback(
     (idList: string, idTask: string, buttonStatus: TypeForButton) => {
       const action = removeTaskAC(idList, idTask, buttonStatus);
@@ -47,8 +48,22 @@ export const CreateToDoLists = React.memo(function () {
     [dispatchTask]
   );
   const addTask = useCallback(
-    (newTitle: string, buttonStatus: TypeForButton, idList: string,data:Moment|null,priority:PriorityType) => {
-      const action = addTaskAC(newTitle, buttonStatus, idList, data,priority );
+    (
+      newTitle: string,
+      buttonStatus: TypeForButton,
+      idList: string,
+      data: Moment | null,
+      priority: PriorityType,
+      time: Moment | null
+    ) => {
+      const action = addTaskAC(
+        newTitle,
+        buttonStatus,
+        idList,
+        data,
+        priority,
+        time
+      );
       dispatchTask(action);
     },
     [dispatchTask]
@@ -94,12 +109,12 @@ export const CreateToDoLists = React.memo(function () {
     [dispatchTask]
   );
   const addNewList = useCallback(() => {
-    const newListTitle = prompt("Введите название нового to-do-list");
-    if (newListTitle) {
+    if (newListTitle!=="") {
       const action = AddNewListAC(newListTitle);
       dispatchTask(action);
     }
-  }, [dispatchTask]);
+    setNewListTitle("")
+  }, [dispatchTask, newListTitle]);
   const removeList = useCallback(
     (idList: string) => {
       const action = RemoveListAC(idList);
@@ -114,58 +129,94 @@ export const CreateToDoLists = React.memo(function () {
     },
     [dispatchTask]
   );
-  const changeButtonCelenderActiveStatus= useCallback(
-    (buttonCelenderActiveStatus:boolean, idList:string)=>{
-      const action= changeButtonCelenderActiveStatusAC(buttonCelenderActiveStatus, idList);
-      dispatchTask(action)
+  const changeInputFormActiveStatus = useCallback(
+    (InputFormActiveStatus: boolean, idList: string) => {
+      const action = changeInputFormActiveStatusAC(
+        InputFormActiveStatus,
+        idList
+      );
+      dispatchTask(action);
     },
     [dispatchTask]
-  )
-return (
+  );
+  const changeAddListButtonStatus=useCallback(()=>{
+   
+    const action = changeAddListButtonStatusAC(addListButtonStatus);
+    dispatchTask(action);
+  },[dispatchTask, addListButtonStatus])
 
-   <>
-      <button type="button" className="buttonAddList" onClick={addNewList}>
-        Добавить новый лист
-      </button>
-       <div className="list">
-      {arrayToDoList.map((el) => {
-        return (
-          <div className="d-flex align-items-start" key={el.idList}>
-            
-           
-            <Task
-              idList={el.idList}
-              title={el.listTitle}
-              tasks={el.tasks}
-              buttonStatus={el.buttonStatusState}
-              removeTask={removeTask}
-              addTask={addTask}
-              changeIsDoneStatus={changeIsDoneStatus}
-              completedTask={completedTask}
-              activeTask={activeTask}
-              allTask={allTask}
-              takeNewTaskTitle={takeNewTaskTitle}
-              removeList={removeList}
-              takeNewTitle={takeNewTitle}
-            ></Task>
-            {el.buttonCelenderActiveStatus==false? 
-              <div className="divButtonStatus">
-                <button className="buttonAddTask" type="button" onClick={()=>changeButtonCelenderActiveStatus(el.buttonCelenderActiveStatus,el.idList)}>+ Добавить задачу</button>
-              </div>:<></>}
-           {el.buttonCelenderActiveStatus? <ButtonCelender
-              idList={el.idList}
-              title={el.listTitle}
-              tasks={el.tasks}
-              buttonStatus={el.buttonStatusState}
-              addTask={addTask}
-              takeNewTitle={takeNewTitle}
-              buttonCelenderActiveStatus={el.buttonCelenderActiveStatus}
-              fuoButtonCelenderActiveStatusInForm={changeButtonCelenderActiveStatus}
-            ></ButtonCelender>:<></>}
-          </div>
-        );
-      })}
-    </div>
-    </>);
-})
-;
+  const fuoNewListTitle=useCallback((e:ChangeEvent<HTMLInputElement>)=>{
+    setNewListTitle(e.currentTarget.value)
+    
+  },[])
+  const handleKeyPress=(e:React.KeyboardEvent<HTMLInputElement>)=>{
+    if(e.key==='Enter'){
+      addNewList();
+    }
+  }
+  return (
+    <>
+      {addListButtonStatus?<div className="divForAddListInput">
+        <input type="text" className="inputAddList" placeholder="Enter the name" value={newListTitle} onChange={fuoNewListTitle} onKeyDown={handleKeyPress}></input>
+        <button type="button" onClick={addNewList}>+</button>
+      </div>:  <button type="button" className="buttonAddList" onClick={changeAddListButtonStatus}>+ To-do list</button>}
+      <div className="list">
+        {arrayToDoList.map((el) => {
+          return (
+            <div className="d-flex align-items-start" key={el.idList}>
+              <Task
+                idList={el.idList}
+                title={el.listTitle}
+                tasks={el.tasks}
+                buttonStatus={el.buttonStatusState}
+                removeTask={removeTask}
+                addTask={addTask}
+                changeIsDoneStatus={changeIsDoneStatus}
+                completedTask={completedTask}
+                activeTask={activeTask}
+                allTask={allTask}
+                takeNewTaskTitle={takeNewTaskTitle}
+                removeList={removeList}
+                takeNewTitle={takeNewTitle}
+              ></Task>
+              {el.inputFormActiveStatus == false ? (
+                <div className="divButtonStatus">
+                  <button
+                    className="buttonAddTask"
+                    type="button"
+                    onClick={() =>
+                      changeInputFormActiveStatus(
+                        el.inputFormActiveStatus,
+                        el.idList
+                      )
+                    }
+                  >
+                    + Add task
+                  </button>
+                </div>
+              ) : (
+                <></>
+              )}
+              {el.inputFormActiveStatus ? (
+                <InputForm
+                  idList={el.idList}
+                  title={el.listTitle}
+                  tasks={el.tasks}
+                  buttonStatus={el.buttonStatusState}
+                  addTask={addTask}
+                  takeNewTitle={takeNewTitle}
+                  InputFormActiveStatus={el.inputFormActiveStatus}
+                  fuoInputFormActiveStatusInPriorityForm={
+                    changeInputFormActiveStatus
+                  }
+                ></InputForm>
+              ) : (
+                <></>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </>
+  );
+});

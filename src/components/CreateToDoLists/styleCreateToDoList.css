@@ -2,29 +2,32 @@
 .list {
 
     position: absolute;
-    margin-top: 50px;
-    display: flex; /* Делаем контейнер flex-контейнером */
-    flex-wrap: nowrap; /* Позволяет элементам переноситься на новую строку */
-    gap: 10px; /* Отступ между элементами */
-    width: 100%; /* Ширина на весь экран */
+    margin-top: 65px;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    width: 100%; 
     padding: 0px 50px 0px 50px;
     box-sizing: border-box;
 }
 
 .d-flex.align-items-start {
-    flex: 0 0 400px; /* Фиксированная ширина 400px, не растягивается и не сжимается */
-  
+    flex: 0 0 400px; 
     border-radius: 8px;
     padding: 55px;
 }
 .buttonAddList{
     position: absolute;
     width: 300px;
-    margin-left: 30%;
     color: rgb(255, 255, 255);
     background-color: rgba(255, 255, 255, 0);
     border: 0cap;
     font-size: 20px;
+    position: fixed; 
+    left: 50%; 
+    transform: translateX(-50%);
+    top: 30px;
+
 }
 .buttonAddList:hover {
     color: #d8d8d8; /* Тёмно-красный, как в вашей теме */
@@ -41,4 +44,37 @@
 }
 .buttonAddTask:hover {
     color: #5a0101; /* Тёмно-красный, как в вашей теме */
+}
+.inputAddList{
+    border:1px solid rgb(194, 194, 194);
+    border-bottom-left-radius :12px;
+    width: 250px;
+    height: 45px;
+    border-top-left-radius:12px;
+    margin-top: 2px;
+}
+.divForAddListInput{
+    flex-direction:row;
+    width: 300px;
+    position: fixed; 
+    left: 50%; 
+    transform: translateX(-50%);
+    top: 40px;
+
+}
+.divForAddListInput button{
+    background-color: #ffffff;
+    border-bottom-right-radius :12px;
+    border-top-right-radius:12px;
+    height: 45.0px;
+    width: 45px;
+    border:0;
+    margin-top: 2px;
+    font-size: large;
+    color: #5a0101;
+    
+}
+.divForAddListInput button:hover{
+    background-color:#d5d5d5;
+    color: #000000;
 }

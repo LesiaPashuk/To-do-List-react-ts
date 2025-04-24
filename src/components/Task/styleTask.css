@@ -49,12 +49,13 @@ h4 {
 .item {
   margin-bottom: 1.3em;
 }
-
+.checkbox-rect-null input[type="checkbox"],
 .checkbox-rect-hightPriority input[type="checkbox"],
  .checkbox-rect-middlePriority input[type="checkbox"],
  .checkbox-rect-lowPriority input[type="checkbox"]{
   display: none;
 }
+.checkbox-rect-null input[type="checkbox"] + label,
 .checkbox-rect-hightPriority input[type="checkbox"] + label,
 .checkbox-rect-middlePriority input[type="checkbox"] + label,
 .checkbox-rect-lowPriority input[type="checkbox"] + label {
@@ -68,18 +69,20 @@ h4 {
   -moz-user-select: none;
   -ms-user-select: none;
 }
-
+.checkbox-rect-null input[type="checkbox"]:hover + label:before,
 .checkbox-rect-hightPriority input[type="checkbox"]:hover + label:before,
 .checkbox-rect-middlePriority input[type="checkbox"]:hover + label:before, 
 .checkbox-rect-lowPriority input[type="checkbox"]:hover + label:before {
   background: #5a0101;
   box-shadow: inset 0px 0px 0px 2px #ffffff;
 }
+.checkbox-rect-null input[type="checkbox"] + label:last-child,
 .checkbox-rect-hightPriority input[type="checkbox"] + label:last-child,
 .checkbox-rect-middlePriority input[type="checkbox"] + label:last-child,
 .checkbox-rect-lowPriority input[type="checkbox"] + label:last-child{
   margin-bottom: 0;
 }
+.checkbox-rect-null input[type="checkbox"]:checked + label:before,
 .checkbox-rect-hightPriority input[type="checkbox"]:checked + label:before,
 .checkbox-rect-middlePriority input[type="checkbox"]:checked + label:before,
 .checkbox-rect-lowPriority input[type="checkbox"]:checked + label:before {
@@ -91,6 +94,20 @@ h4 {
   transform: rotate(90deg);
   background: #8bb35c;
   box-shadow: 0 0 0 1px #282828;
+}
+.checkbox-rect-null input[type="checkbox"] + label:before{
+  content: "";
+  display: block;
+  width: 1.4em;
+  height: 1.4em;
+  border: 1.5px solid rgb(162, 162, 162);
+  border-radius: 2em;
+  position: absolute;
+  left: 0;
+  top: 0;
+  -webkit-transition: all 0.2s, background 0.2s ease-in-out;
+  transition: all 0.2s, background 0.2s ease-in-out;
+  background:  hsla(0, 80%, 39%, 0);
 }
 /*Высокий приоритет*/
 .checkbox-rect-hightPriority input[type="checkbox"] + label:before {
@@ -206,5 +223,16 @@ h4 {
   width: 100px;
   margin-left: 37.5px;
   margin-top: 10px;
+  margin-bottom: -20px;
+}
+.timetext{
+  position: relative;
+  color: #b31414;
+  border: 1px solid  #b31414;
+  border-radius: 4px;
+  font-size: 12px;
+  width: 40px;
+  margin-left: 145px;
+  margin-top: 0px;
   margin-bottom: -20px;
 }

@@ -1,7 +1,7 @@
 import { PriorityType, Task, TaskType } from "../components/Task/Task"
 import { TypeForButton } from "../components/Task/Task";
 import {v1} from 'uuid';
-import { link } from "fs";
+import { link, stat } from "fs";
 import { Moment } from "moment";
 
 type removeTask={
@@ -13,11 +13,12 @@ type removeTask={
 }
 type addTask={
     priority:PriorityType, 
-    data:Moment|null,
+    date:Moment|null,
     idList:string,
     newTitle:string,
     type:"add-task",
     buttonStatus:TypeForButton
+     time:Moment|null,
 }
 type changeIsDoneStatus={
     idTask:string,
@@ -60,18 +61,22 @@ type takeNewTitle={
     newTitle:string,
 }
 
-type changeButtonCelenderActiveStatus={
+type changeInputFormActiveStatus={
     type:"change-button-celender-active-status",
-    buttonCelenderActiveStatus:boolean,
+    inputFormActiveStatus:boolean,
     idList:string,
 }
-export type ActionType=removeTask | addTask | changeIsDoneStatus | onlyCompleted | onlyActive | allTask | takeNewTaskTitle | addNewList | removeList|takeNewTitle| changeButtonCelenderActiveStatus;
+type changeAddListButtonStatus={
+    type:"change-add-list-button-status",
+    addListButtonStatus:boolean,
+}
+export type ActionType=removeTask | addTask | changeIsDoneStatus | onlyCompleted | onlyActive | allTask | takeNewTaskTitle | addNewList | removeList|takeNewTitle| changeInputFormActiveStatus | changeAddListButtonStatus;
 
 export const removeTaskAC=(idList: string, idTask:string, buttonStatus: TypeForButton):removeTask=>{
     return {type:"remove-task", idList:idList,idTask:idTask, buttonStatus: buttonStatus}
 }
-export const addTaskAC=( newTitle:string,buttonStatus:TypeForButton,idList: string,data:Moment|null,priority:PriorityType):addTask=>{
-    return {type:"add-task", newTitle: newTitle, buttonStatus:buttonStatus,idList:idList, data:data,priority:priority}
+export const addTaskAC=( newTitle:string,buttonStatus:TypeForButton,idList: string,date:Moment|null,priority:PriorityType, time:Moment|null,):addTask=>{
+    return {type:"add-task", newTitle: newTitle, buttonStatus:buttonStatus,idList:idList, date:date,priority:priority,time:time}
 }
 export const changeIsDoneStatusAC=(idList: string, idTask:string,buttonStatus:TypeForButton):changeIsDoneStatus=>{
     return {type:"change-is-done-status", idList:idList,idTask:idTask, buttonStatus:buttonStatus}
@@ -97,29 +102,34 @@ export const AddNewListAC=( newListTitle:string):addNewList=>{
 export const RemoveListAC=(idList:string):removeList=>{
     return {type:"remove-list", idList:idList}
 }
-export const changeButtonCelenderActiveStatusAC=(buttonCelenderActiveStatus:boolean, idList:string):changeButtonCelenderActiveStatus=>{
-    return {type:"change-button-celender-active-status",buttonCelenderActiveStatus:buttonCelenderActiveStatus, idList:idList }
+export const changeInputFormActiveStatusAC=(inputFormActiveStatus:boolean, idList:string):changeInputFormActiveStatus=>{
+    return {type:"change-button-celender-active-status",inputFormActiveStatus:inputFormActiveStatus, idList:idList }
 }
-
+export const changeAddListButtonStatusAC=(addListButtonStatus:boolean):changeAddListButtonStatus=>{
+    return {type:"change-add-list-button-status",addListButtonStatus:addListButtonStatus}
+}
 export type arrType={
     listTitle:string,
     idList:string, 
     tasks: Array<TaskType>, 
     history: Array<TaskType>,
     buttonStatusState:TypeForButton,
-    buttonCelenderActiveStatus:boolean,
+    inputFormActiveStatus:boolean,
 }
 export type initialState2= { 
     arrayToDoList: Array<arrType>,
+    addListButtonStatus:boolean,
 };
 const initialState2:initialState2={
     arrayToDoList:[],
+    addListButtonStatus:false,
    
 }
 export const reducerForAllToDoList=(state:initialState2=initialState2, action:ActionType):initialState2 => {
     switch (action.type){
         case "remove-task":
              return {
+                ...state,
                 arrayToDoList:state.arrayToDoList.map(list=>
                     list.idList===action.idList?
                     {...list,
@@ -131,7 +141,7 @@ export const reducerForAllToDoList=(state:initialState2=initialState2, action:Ac
             };
         case "add-task":
             let statusForTask=action.buttonStatus==="typeDone"?true:false;
-                let newTask = {id:v1(), title:action.newTitle, isDone:statusForTask, data:action.data, priority:action.priority};
+                let newTask = {id:v1(), title:action.newTitle, isDone:statusForTask, date:action.date, priority:action.priority, time:action.time};
                 return {
                 ...state,
                 arrayToDoList:state.arrayToDoList.map(list=>
@@ -154,7 +164,7 @@ export const reducerForAllToDoList=(state:initialState2=initialState2, action:Ac
                     filterTaskStatus=undefined;
     
                 return {
-
+                ...state,
                 arrayToDoList:state.arrayToDoList.map(list=>
                     list.idList===action.idList?
                     {
@@ -169,6 +179,7 @@ export const reducerForAllToDoList=(state:initialState2=initialState2, action:Ac
                 };
         case "only-completed":
              return {
+                ...state,
                 arrayToDoList:state.arrayToDoList.map(list=>
                     list.idList===action.idList?
                     {...list,
@@ -179,7 +190,8 @@ export const reducerForAllToDoList=(state:initialState2=initialState2, action:Ac
                
             };
         case "only-active":
-            return{ arrayToDoList:state.arrayToDoList.map(list=>
+            return{ ...state,
+                arrayToDoList:state.arrayToDoList.map(list=>
                 list.idList===action.idList?
                 {...list,
                     buttonStatusState:"typeActive",
@@ -189,7 +201,9 @@ export const reducerForAllToDoList=(state:initialState2=initialState2, action:Ac
            
             };
         case "all-tasks":
-        return{ arrayToDoList:state.arrayToDoList.map(list=>
+        return{ 
+            ...state,
+            arrayToDoList:state.arrayToDoList.map(list=>
             list.idList===action.idList?
             {...list,
                 buttonStatusState:"typeAll",
@@ -200,6 +214,7 @@ export const reducerForAllToDoList=(state:initialState2=initialState2, action:Ac
         };
         case "take-new-task-title":
             return {
+                ...state,
                 arrayToDoList:state.arrayToDoList.map(list=>
                     list.idList===action.idList?
                     {
@@ -211,6 +226,7 @@ export const reducerForAllToDoList=(state:initialState2=initialState2, action:Ac
             };
         case "take-new-title":
             return{
+                ...state,
                 arrayToDoList:state.arrayToDoList.map(list=>
                     list.idList===action.idList?
                     {...list, 
@@ -220,23 +236,32 @@ export const reducerForAllToDoList=(state:initialState2=initialState2, action:Ac
 
             };
         case "add-new-list":
+            const newAddListButtonStatus = !state.addListButtonStatus
             return{
-                arrayToDoList:[{listTitle:action.newListTitle, idList:v1(), tasks:[], history:[], buttonStatusState:"typeAll", buttonCelenderActiveStatus:false}, ...state.arrayToDoList]
-            
+                arrayToDoList:[{listTitle:action.newListTitle, idList:v1(), tasks:[], history:[], buttonStatusState:"typeAll", inputFormActiveStatus:false}, ...state.arrayToDoList],
+                addListButtonStatus:newAddListButtonStatus,
             };
         case "remove-list":
             return{
+                ...state,
                 arrayToDoList:state.arrayToDoList.filter(list=>list.idList!==action.idList)
             
             };
         case "change-button-celender-active-status":
             return {
+                ...state,
                 arrayToDoList:state.arrayToDoList.map(list=>
                     list.idList===action.idList?{
                         ...list, 
-                        buttonCelenderActiveStatus: (!action.buttonCelenderActiveStatus)
+                        inputFormActiveStatus: (!action.inputFormActiveStatus)
                     
                 }:list)
+            }
+        case "change-add-list-button-status":
+            const newAddListButtonStatus2 = !action.addListButtonStatus;
+            return {
+                ...state,
+                addListButtonStatus:newAddListButtonStatus2,
             }
             default:
             return state;

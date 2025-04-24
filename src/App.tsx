@@ -6,7 +6,7 @@ import { useState } from 'react';
  function App() {
  const [buttonStatusForNav, setButtonStatusForNav]=useState<typeForButtonNav>("TaskToDoList")
   return (<div className="App">
-    <nav>
+   {/*  <nav>
     <ul id="navbar" className="d-flex align-items-start flex-column mb-3">
   <li><button onClick={()=>{ setButtonStatusForNav("TaskToDoList")}}>1</button></li>
   <li><button onClick={()=>{ setButtonStatusForNav("Сalendar")}}>2</button></li>
@@ -14,7 +14,7 @@ import { useState } from 'react';
   <li><button onClick={()=>{ setButtonStatusForNav("Matrix")}}>4</button></li>
   <li><button onClick={()=>{ setButtonStatusForNav("Timer")}}>5</button></li>
 </ul>
-    </nav>
+    </nav>*/}
     <div>
       {buttonStatusForNav==="TaskToDoList"?
       (<CreateToDoLists></CreateToDoLists>):

@@ -2,7 +2,7 @@ import '../Task/styleTask.css';
 import { ChangeEvent,KeyboardEvent, useCallback, useState } from "react"
 import { EditableSpan } from "../EditableSpan/EditableSpan"
 import React from 'react';
-import { ButtonCelender } from '../ButtonCelender/ButtonCelender';
+import { InputForm } from '../InputForm/InputForm';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -15,18 +15,19 @@ export type TaskType={
     id:string,
     title: string,
     isDone: boolean
-    data: Moment|null, 
+    date: Moment|null, 
+    time:Moment|null,
     priority: PriorityType,
 }
-export type ButtonCelenderType={
+export type InputFormType={
     idList:string,
     title: string,
     tasks: Array<TaskType>,
     buttonStatus:TypeForButton,
-    buttonCelenderActiveStatus:boolean,
-    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string,data:Moment|null,priority:PriorityType)=>void
+    InputFormActiveStatus:boolean,
+    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string,data:Moment|null,priority:PriorityType, time:Moment|null)=>void
     takeNewTitle:(idList: string, newTitle:string)=>void,
-    fuoButtonCelenderActiveStatusInForm:(buttonCelenderActiveStatus:boolean, idList:string)=>void
+    fuoInputFormActiveStatusInPriorityForm:(buttonCelenderActiveStatus:boolean, idList:string)=>void
 }
 export type PropsType={
     idList:string,
@@ -34,7 +35,7 @@ export type PropsType={
     tasks: Array<TaskType>,
     buttonStatus:TypeForButton,
     removeTask:(idList: string, idTask:string, buttonStatus: TypeForButton)=>void
-    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string,data:Moment|null,priority:PriorityType)=>void
+    addTask:( newTitle:string,buttonStatus:TypeForButton,idList: string,data:Moment|null,priority:PriorityType, time:Moment|null)=>void
     changeIsDoneStatus:(idList: string, idTask:string,buttonStatus:TypeForButton)=>void
     completedTask:(idList: string)=>void
     activeTask:(idList: string)=>void
@@ -44,19 +45,19 @@ export type PropsType={
     takeNewTitle:(idList: string, newTitle:string)=>void
 }
 export type TypeForButton="typeAll"|"typeActive"|"typeDone";
-export type PriorityType="hightPriority"|"middlePriority"|"lowPriority";
+export type PriorityType="hightPriority"|"middlePriority"|"lowPriority"|null;
 
 export const Task=React.memo(function Task(props: PropsType){
     const[newInputValue, setNewInputValue]=useState("")
     const[error, setError]=useState(false)
     const [selectedDate, setSelectedDate] = useState<Moment | null>(null);
-
+    const [time, setTime]=useState<Moment|null>(null);
   const [valueForm, setValueForm] = useState<PriorityType>("hightPriority");
 
     const addNewInputValueFuo=()=>{
         if(newInputValue.trim()!=""){
            
-      props.addTask(newInputValue, props.buttonStatus, props.idList, selectedDate, valueForm);
+      props.addTask(newInputValue, props.buttonStatus, props.idList, selectedDate, valueForm,time );
             setNewInputValue("")
         }
         else{setError(true)}
@@ -104,9 +105,12 @@ export const Task=React.memo(function Task(props: PropsType){
           addNewInputValueFuo(); 
         }
       },[addNewInputValueFuo])
-    const dataConvert=useCallback((data:Moment|null)=>{
+    const dateConvert=useCallback((data:Moment|null)=>{
         moment.locale('ru');
         return data?.format('DD MMMM YYYY')
+    },[])
+    const timeConvert=useCallback((time:Moment|null)=>{
+        return time?.format('HH:MM')
     },[])
     return(
     <div>
@@ -129,8 +133,9 @@ export const Task=React.memo(function Task(props: PropsType){
                  <div>
                  <h4>
                     <EditableSpan title={task.title} onChange={ onTakeNewTaskTitleFuo(task.id)}></EditableSpan><br />
-                 
-                    </h4> {task.data?<p className='dateText'>{dataConvert(task.data)}</p>:<></>}
+                    </h4>
+                    {task.date?<p className='dateText'>{dateConvert(task.date)}</p>:<></>}
+                    {task.time?<p className='timetext'>{timeConvert(task.time)}</p>:<></>}
                    
                   </div>
                  <div className="box">
